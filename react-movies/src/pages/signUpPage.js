@@ -1,6 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
+import Header from "../components/headerMovieList";
+import Grid from "@mui/material/Grid2";
+import { Button, Typography } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 const SignUpPage = props => {
   const context = useContext(AuthContext)
@@ -24,21 +28,51 @@ const SignUpPage = props => {
   }
 
   return (
-    <>
-      <h2>SignUp page</h2>
-      <p>You must register a username and password to log in </p>
-      <input value={userName} placeholder="user name" onChange={e => {
-        setUserName(e.target.value);
-      }}></input><br />
-      <input value={password} type="password" placeholder="password" onChange={e => {
-        setPassword(e.target.value);
-      }}></input><br />
-      <input value={passwordAgain} type="password" placeholder="password again" onChange={e => {
-        setPasswordAgain(e.target.value);
-      }}></input><br />
-      {/* Login web form  */}
-      <button onClick={register}>Register</button>
-    </>
+    <Grid container direction="column" alignItems="center">
+      <Grid size={12}>
+        <Header title={"Sign Up"} />
+      </Grid>
+      <Grid container sx={{flex: "1 1 500px"}} direction="column" alignItems="center">
+      <Typography component="h3" variant="h5" style={{ backgroundColor: "rgb(220,220,220)", fontFamily: "sans-serif", padding: "8px", borderStyle: "solid", borderWidth: "2px", borderColor: "rgb(120, 120, 120)", borderRadius: "4px" }}>
+          Username
+        </Typography>
+        <TextField
+          sx={{ margin: 1, minWidth: 300, backgroundColor: "rgb(160, 128, 224, 0.5)" }}
+          id="username"
+          label="Username"
+          value={userName}
+          onChange={e => {
+            setUserName(e.target.value);}}
+        />
+        <Typography component="h3" variant="h5" style={{ backgroundColor: "rgb(220,220,220)", fontFamily: "sans-serif", padding: "8px", borderStyle: "solid", borderWidth: "2px", borderColor: "rgb(120, 120, 120)", borderRadius: "4px" }}>
+          Password
+        </Typography>
+        <TextField
+          sx={{ margin: 1, minWidth: 300, backgroundColor: "rgb(160, 128, 224, 0.5)" }}
+          id="password"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={e => {
+            setPassword(e.target.value);}}
+        />
+        <Typography component="h3" variant="h5" style={{ backgroundColor: "rgb(220,220,220)", fontFamily: "sans-serif", padding: "8px", borderStyle: "solid", borderWidth: "2px", borderColor: "rgb(120, 120, 120)", borderRadius: "4px" }}>
+          Verify Password
+        </Typography>
+        <TextField
+          sx={{ margin: 1, minWidth: 300, backgroundColor: "rgb(160, 128, 224, 0.5)" }}
+          id="passwordAgain"
+          label="Verify Password"
+          type="password"
+          value={passwordAgain}
+          onChange={e => {
+            setPasswordAgain(e.target.value);}}
+        />
+        <Button variant="contained" onClick={register}>
+          Sign Up
+        </Button>
+        </Grid>
+      </Grid>
   );
 };
 
