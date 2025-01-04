@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import usersRouter from './api/users';
 import './db';
-import defaultErrHandler from './errHandler'
+import defaultErrHandler from './errHandler';
 import moviesRouter from './api/movies';   //import movies router
 import authenticate from './authenticate';
 

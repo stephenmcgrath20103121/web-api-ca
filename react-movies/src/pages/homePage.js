@@ -9,7 +9,7 @@ import { Pagination } from "@mui/material";
 const HomePage = (props) => {
   const [page, setPage] = useState(1);
 
-  const {  data, error, isLoading, isError }  = useQuery(['discover', page],() => getMovies(page))
+  const { data, error, isLoading, isError }  = useQuery(['discover', page],() => getMovies(page))
 
   if (isLoading) {
     return <Spinner />
