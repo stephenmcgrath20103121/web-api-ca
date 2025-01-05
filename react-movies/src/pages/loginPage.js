@@ -1,20 +1,31 @@
 import React, { useContext, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
-import { Link } from "react-router-dom";
+import { MoviesContext } from '../contexts/moviesContext';
 import Header from "../components/headerMovieList";
 import Grid from "@mui/material/Grid2";
 import { Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { getFavouriteMovies } from "../api/tmdb-api";
 
 const LoginPage = props => {
     const context = useContext(AuthContext);
+    const movieContext = useContext(MoviesContext);
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = () => {
+    const login = async () => {
         context.authenticate(userName, password);
+        try {
+          const movies = await getFavouriteMovies(userName);
+          console.log("Favourite Movies:", movies); 
+          const ids = movies.movie_ids;
+          console.log("Favourite movie IDs:", ids);
+          movieContext.loadFavourites(ids);
+        } catch (error) {
+          console.error("Error fetching favourite movies:", error);
+      }
     };
 
     let location = useLocation();

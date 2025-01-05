@@ -7,6 +7,10 @@ const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState( {} ) 
   const [watchList, setWatchList] = useState( [] )
 
+  const loadFavourites = (ids) => {
+    setFavorites(ids);
+  }
+
   const addToFavorites = (movie) => {
     let newFavorites = [];
     if (!favorites.includes(movie.id)){
@@ -51,6 +55,7 @@ const MoviesContextProvider = (props) => {
     <MoviesContext.Provider
       value={{
         favorites,
+        loadFavourites,
         addToFavorites,
         removeFromFavorites,
         addReview,
