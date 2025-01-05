@@ -24,20 +24,17 @@ export const getUpcomingMovies = async ({ queryKey }) => {
   return response.json();
 };
 
-  export const getPopularMovies = (page) => {
-    return fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
-    ).then((response) => {
-      if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.status_message || "Something went wrong");
-        });
+  export const getPopularMovies = async ({ queryKey }) => {
+    const [, pagePart] = queryKey;
+    const { page } = pagePart;
+    const response = await fetch(
+      `http://localhost:8080/api/movies/tmdb/popular?page=${page}`, {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
       }
-      return response.json();
-    })
-    .catch((error) => {
-        throw error
-    });
+    }
+    )
+    return response.json();
   };
 
   export const getTopRatedMovies = (page) => {
