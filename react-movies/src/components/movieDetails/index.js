@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Grid from "@mui/material/Grid2";
-import { getCredits, getMovieRecommendations } from '../../api/tmdb-api';
+import { getMovieRecommendations } from '../../api/tmdb-api';
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -14,7 +14,6 @@ import Drawer from "@mui/material/Drawer";
 import Spinner from '../spinner'
 import MovieReviews from "../movieReviews";
 import SimpleMovieCard from "../simpleMovieCard";
-import ActorCard from "../actorCard";
 
 const root = {
   display: "flex",
@@ -34,21 +33,12 @@ const MovieDetails = ({ movie }) => {
   );
   const recommendationResult = recommendations?.results || [];
 
-  const {data: credits, isCredLoading, isCredError} = useQuery(
-    ["movieCredits", movie.id], () => getCredits(movie.id)
-  );
-  const cast = credits?.cast || [];
-
-  if (isRecLoading || isCredLoading) {
+  if (isRecLoading) {
     return <Spinner />;
   } 
 
   if ( isRecError) {
     return <Typography>Error while loading recommendations</Typography>
-  }
-
-  if ( isCredError) {
-    return <Typography>Error while loading credits</Typography>
   }
 
   return (
@@ -100,18 +90,7 @@ const MovieDetails = ({ movie }) => {
         ))}
       </Paper>
 
-      <Paper>
-        <Typography variant="h5" component="h3" sx={{ marginTop: 4 }}>
-        Cast
-        </Typography>
-          <Grid container spacing={1.5}>
-            {cast.slice(0,12).map((castMember) => (
-              <Grid item key={castMember.id} xs={12} sm={6} md={4} lg={3}>
-                <ActorCard cast={castMember} />
-              </Grid>
-            ))}
-          </Grid>
-      </Paper>
+      
 
       <Paper>
         <Typography variant="h5" gutterBottom>

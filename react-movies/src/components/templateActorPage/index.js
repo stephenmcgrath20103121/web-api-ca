@@ -5,10 +5,10 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getActorImages } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
-import Spinner from '../spinner'
+import Spinner from '../spinner';
 
 const TemplateActorPage = ({ actor, children }) => {
-    const { data , error, isLoading, isError } = useQuery(
+    const { data: images , error: imgError, isLoading, isError } = useQuery(
       ["images", { id: actor.id }],
       getActorImages
     );
@@ -18,9 +18,9 @@ const TemplateActorPage = ({ actor, children }) => {
     }
 
     if (isError) {
-      return <h1>{error.message}</h1>;
+      return <h1>{imgError.message}</h1>;
     }
-    const images = data.profiles
+    const imageList = images.profiles;
   
     return (
         <>
@@ -39,7 +39,7 @@ const TemplateActorPage = ({ actor, children }) => {
                 }}
                 cols={1}
             >
-                {images.map((image) => (
+                {imageList.map((image) => (
                     <ImageListItem key={image.file_path} cols={1}>
                     <img
                         src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}

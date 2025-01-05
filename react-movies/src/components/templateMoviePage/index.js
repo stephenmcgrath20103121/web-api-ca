@@ -3,17 +3,25 @@ import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid2";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getMovieImages } from "../../api/tmdb-api";
+import { getMovieImages, getCredits } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
-import Spinner from '../spinner'
+import Spinner from '../spinner';
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import ActorCard from "../actorCard";
 
 const TemplateMoviePage = ({ movie, children }) => {
     const { data , error, isLoading, isError } = useQuery(
         ["images", { id: movie.id }],
         getMovieImages
       );
+
+      const { data: actors, error: actorError, isLoading: actorIsLoading, isError: actorIsError,} = useQuery(
+        ["actors", { id: movie.id }], 
+        getCredits
+      );
     
-      if (isLoading) {
+      if (isLoading || actorIsLoading ) {
         return <Spinner />;
       }
     
@@ -21,6 +29,11 @@ const TemplateMoviePage = ({ movie, children }) => {
         return <h1>{error.message}</h1>;
       }
       const images = data.posters 
+    
+      if (actorIsError) {
+        return <h1>{actorError.message}</h1>;
+      }
+      const cast = actors.cast;
 
   return (
     <>
@@ -55,6 +68,20 @@ const TemplateMoviePage = ({ movie, children }) => {
           {children}
         </Grid>
       </Grid>
+
+      <Paper>
+        <Typography variant="h5" component="h3" sx={{ marginTop: 4 }}>
+        Cast
+        </Typography>
+          <Grid container spacing={1.5}>
+            {cast.slice(0,12).map((castMember) => (
+              <Grid item key={castMember.id} xs={12} sm={6} md={4} lg={3}>
+                <ActorCard cast={castMember} />
+              </Grid>
+            ))}
+          </Grid>
+      </Paper>
+
     </>
   );
 };

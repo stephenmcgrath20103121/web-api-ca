@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid2";
-import SimpleMovieCard from "../simpleMovieCard"; 
+import SimpleMovieCard from "../simpleMovieCard";
 
 const root = {
   display: "flex",
@@ -17,7 +17,7 @@ const chip = { margin: 0.5 };
 const ActorDetails = ({ actor, movies }) => {
   return (
     <>
-      <Paper sx={{ padding: 3, marginBottom: 3 }}>
+      <Paper sx={{...root}}>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
             <Typography variant="h5" color="textSecondary">
@@ -46,6 +46,7 @@ const ActorDetails = ({ actor, movies }) => {
         ))}
         </Grid>
       </Paper>
+
     </>
   );
 };

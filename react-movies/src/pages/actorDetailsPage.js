@@ -9,9 +9,10 @@ import Spinner from '../components/spinner'
 const ActorDetailsPage = () => {
   const { id } = useParams(); 
   const { data: actor, ActError, isActLoading, isActError } = useQuery(
-    ["actorDetails", { id }],
-    () => getActor(id)
+    ["actorDetails", { id: id }],
+    getActor
   );
+
   const { data: movies, MovError, isMovLoading, isMovError } = useQuery(
     ["actorMovies", { id }],
     () => getActorMovies(id)
