@@ -9,9 +9,11 @@ export const getMovies = async () => {
   return response.json();
 };
 
-export const getUpcomingMovies = async () => {
+export const getUpcomingMovies = async ({ queryKey }) => {
+  const [, pagePart] = queryKey;
+  const { page } = pagePart;
   const response = await fetch(
-    'http://localhost:8080/api/movies/tmdb/upcoming', {
+    `http://localhost:8080/api/movies/tmdb/upcoming?page=${page}`, {
     headers: {
       'Authorization': window.localStorage.getItem('token')
     }

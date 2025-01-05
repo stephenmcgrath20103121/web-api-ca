@@ -48,8 +48,16 @@ router.get('/tmdb/discover', asyncHandler(async (req, res) => {
 }));
 
 router.get('/tmdb/upcoming', asyncHandler(async (req, res) => {
-    const upcomingMovies = await getUpcomingMovies();
-    res.status(200).json(upcomingMovies);
+    let { page = 1 } = req.query;
+    [page] = [+page];
+
+    try {
+        const upcomingMovies = await getUpcomingMovies(page);
+        res.status(200).json(upcomingMovies);
+    } catch (error) {
+        console.error('Error fetching upcoming movies:', error);
+        res.status(404).json({message: 'The upcoming movies you requested could not be found.', status_code: 404});
+    }
 }));
 
 router.get('/tmdb/genres', asyncHandler(async (req, res) => {

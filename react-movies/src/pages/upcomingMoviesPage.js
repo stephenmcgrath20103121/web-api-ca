@@ -4,12 +4,11 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToWatchList from '../components/cardIcons/addToWatchList'
-import { Pagination } from "@mui/material";
 
-const UpcomingMoviesPage = (props) => {
-  const [page, setPage] = useState(1);
+const UpcomingMoviesPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const {  data, error, isLoading, isError }  = useQuery(['upcoming', page],() => getUpcomingMovies(page))
+  const {  data, error, isLoading, isError }  = useQuery(["upcoming", { page: currentPage }], getUpcomingMovies);
   if (isLoading) {
     return <Spinner />
   }
@@ -18,10 +17,7 @@ const UpcomingMoviesPage = (props) => {
   }  
   
   const movies = data.results;
-
-  const handlePageChange = (event,value) => {
-    setPage(value);
-  }
+  const totalPages = data.total_pages;
 
   return (
     <>
@@ -31,14 +27,15 @@ const UpcomingMoviesPage = (props) => {
       action={(movie) => {
         return <AddToWatchList movie={movie} />
       }}
+      currentPage={currentPage}
+      setCurrentPage={(page) => {
+      if (page > 0 && page <= totalPages) {
+        setCurrentPage(page);
+      }
+    }}
+    totalPages={totalPages}
     />
-<Pagination
-      count={data.total_pages}
-      page={page}
-      onChange={handlePageChange}
-      sx={{ display: "flex", justifyContent: "center"}}
-    />
-    </>
+  </>
   );
 };
 export default UpcomingMoviesPage;
