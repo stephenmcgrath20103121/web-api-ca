@@ -2,8 +2,9 @@ import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 import express from 'express';
 import imagesRouter from './images';
+import reviewsRouter from './reviews';
 import {
-    getUpcomingMovies, getGenres, getMovies, getMovie, getPopularMovies, getTopRatedMovies, getMovieImages
+    getUpcomingMovies, getGenres, getMovies, getMovie, getPopularMovies, getTopRatedMovies
   } from '../tmdb-api';
   
 const router = express.Router();
@@ -101,5 +102,6 @@ router.get('/tmdb/genres', asyncHandler(async (req, res) => {
 }));
 
 router.use('/images', imagesRouter);
+router.use('/reviews', reviewsRouter);
 
 export default router;
