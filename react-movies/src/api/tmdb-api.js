@@ -1,6 +1,8 @@
-export const getMovies = async () => {
+export const getMovies = async ({ queryKey }) => {
+  const [, pagePart] = queryKey;
+  const { page } = pagePart;
   const response = await fetch(
-    'http://localhost:8080/api/movies/tmdb/discover', {
+    `http://localhost:8080/api/movies/tmdb/discover?page=${page}`, {
     headers: {
       'Authorization': window.localStorage.getItem('token')
     }

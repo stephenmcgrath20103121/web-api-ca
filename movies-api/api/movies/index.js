@@ -43,8 +43,16 @@ router.get('/:id', asyncHandler(async (req, res) => {
 }));
 
 router.get('/tmdb/discover', asyncHandler(async (req, res) => {
-    const movies = await getMovies();
-    res.status(200).json(movies);
+    let { page = 1 } = req.query;
+    [page] = [+page];
+
+    try {
+        const movies = await getMovies(page);
+        res.status(200).json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(404).json({message: 'The movies you requested could not be found.', status_code: 404});
+    }
 }));
 
 router.get('/tmdb/upcoming', asyncHandler(async (req, res) => {

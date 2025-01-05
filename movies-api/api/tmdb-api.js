@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 
-export const getMovies = async () => {
+export const getMovies = async (page = 1) => {
     try {
         const response = await fetch(
-            `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
+            `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&language=en-US&page=${page}`
         );
 
         if (!response.ok) {
