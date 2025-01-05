@@ -31,6 +31,7 @@ const SiteHeader = ({ props }) => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Popular", path: "/movies/popular" },
     { label: "Top Rated", path: "/movies/top_rated" },
+    { label: "Trending", path: "/movies/trending" },
     { label: "Log In", path: "/" },
     { label: "Sign Up", path: "/signup" }
   ];

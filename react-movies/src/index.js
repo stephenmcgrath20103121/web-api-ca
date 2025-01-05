@@ -13,6 +13,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import PopularMoviesPage from "./pages/popularMoviesPage";
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
+import TrendingMoviesPage from "./pages/trendingMoviesPage";
 import ActorDetailsPage from './pages/actorDetailsPage';
 import LoginPage from "./pages/loginPage";
 import AuthContextProvider from "./contexts/authContext";
@@ -42,6 +43,7 @@ const App = () => {
               <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
               <Route path="/movies/popular" element={<PopularMoviesPage />} />
               <Route path="/movies/top_rated" element={<TopRatedMoviesPage />} />
+              <Route path="/movies/trending" element={<TrendingMoviesPage />} />
               <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
               <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
               <Route path="/movies/:id" element={<MoviePage />} />

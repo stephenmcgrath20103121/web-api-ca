@@ -49,6 +49,19 @@ export const getUpcomingMovies = async ({ queryKey }) => {
     )
     return response.json();
   };
+
+  export const getTrendingMovies = async ({ queryKey }) => {
+    const [, pagePart] = queryKey;
+    const { page } = pagePart;
+    const response = await fetch(
+      `http://localhost:8080/api/movies/tmdb/trending?page=${page}`, {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
+      }
+    }
+    )
+    return response.json();
+  };
   
   export const getMovie = async (args) => {
     const [, idPart] = args.queryKey;
