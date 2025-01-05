@@ -2,7 +2,7 @@ import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 import express from 'express';
 import {
-    getUpcomingMovies, getGenres, getMovies, getMovie, getPopularMovies
+    getUpcomingMovies, getGenres, getMovies, getMovie, getPopularMovies, getTopRatedMovies
   } from '../tmdb-api';
   
 const router = express.Router();
@@ -78,6 +78,19 @@ router.get('/tmdb/popular', asyncHandler(async (req, res) => {
     } catch (error) {
         console.error('Error fetching popular movies:', error);
         res.status(404).json({message: 'The popular movies you requested could not be found.', status_code: 404});
+    }
+}));
+
+router.get('/tmdb/topRated', asyncHandler(async (req, res) => {
+    let { page = 1 } = req.query;
+    [page] = [+page];
+
+    try {
+        const topRatedMovies = await getTopRatedMovies(page);
+        res.status(200).json(topRatedMovies);
+    } catch (error) {
+        console.error('Error fetching top rated movies:', error);
+        res.status(404).json({message: 'The top rated movies you requested could not be found.', status_code: 404});
     }
 }));
 

@@ -4,13 +4,12 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToWatchList from '../components/cardIcons/addToWatchList'
-import { Pagination } from "@mui/material";
 
-const TopRatedMoviesPage = (props) => {
-  const [page, setPage] = useState(1);
+const TopRatedMoviesPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const {  data, error, isLoading, isError }  = useQuery(['top_rated', page],() => getTopRatedMovies(page))
-  if (isLoading) {
+  const {  data, error, isLoading, isError }  = useQuery(["top_rated", { page: currentPage }], getTopRatedMovies);
+    if (isLoading) {
     return <Spinner />
   }
   if (isError) {
@@ -18,10 +17,7 @@ const TopRatedMoviesPage = (props) => {
   }  
   
   const movies = data.results;
-
-  const handlePageChange = (event,value) => {
-    setPage(value);
-  }
+  const totalPages = data.total_pages;
 
   return (
     <>
@@ -31,12 +27,13 @@ const TopRatedMoviesPage = (props) => {
       action={(movie) => {
         return <AddToWatchList movie={movie} />
       }}
-    />
-    <Pagination
-      count={data.total_pages}
-      page={page}
-      onChange={handlePageChange}
-      sx={{ display: "flex", justifyContent: "center"}}
+      currentPage={currentPage}
+      setCurrentPage={(page) => {
+      if (page > 0 && page <= totalPages) {
+        setCurrentPage(page);
+      }
+    }}
+    totalPages={totalPages}
     />
     </>
   );
