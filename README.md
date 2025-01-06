@@ -1,53 +1,73 @@
 # Assignment 2 - Web API.
 
-Name: Your Name
+Name: Stephen McGrath
 
 ## Features.
-
-A bullet-point list of the ADDITIONAL features you have implemented in the API **THAT WERE NOT IN THE LABS** (or modifications to existing features)
  
- + Feature 1 
- + Feature 2 
- + Feature 3 
- + etc
+ + Many API calls handled by custom backend
+ + Protected routes added; users must sign in/up
+ + Users' favourite movies are stored in the MongoDB Database
+ + Users now have their own individual favourite movies page
 
 ## Setup requirements.
 
-[ Outline any non-standard setup steps necessary to run your app locally after cloning the repo.]
++ Refer to README in react-movies to set up frontend app
++ Run 'npm install' in react-movies and movies-api
++ Run 'npm install dotenv' in react-movies and movies-api
++ Run 'npm start' in react-movies
++ Run 'npm run dev' in movie-api
 
 ## API Configuration
 
-Describe any configuration that needs to take place before running the API. For example, creating an `.env` file and what variables to put in it. Give an example of how this might be done.
+Create .env files in react-movies and movies-api
 
-REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB, just placeholders as indicated below:
-
+Enter the following in react-movies/.env
 ______________________
-NODEENV=development
+REACT_APP_TMDB_KEY= YourTMDBKey
+FAST_REFRESH=false
+______________________
+
+Enter the following in movies-api/.env
+______________________
+NODE_ENV=development
 PORT=8080
-HOST=
-mongoDB=YourMongoURL
-seedDb=true
-secret=YourJWTSecret
+HOST=localhost
+MONGO_DB= YourMongoURL
+TMDB_KEY= YourTMDBKey
+secret= YourJWTSecret
 ______________________
 
 ## API Design
-Give an overview of your web API design, perhaps similar to the following: 
 
-- /api/movies | GET | Gets a list of movies 
-- /api/movies/{movieid} | GET | Gets a single movie 
-- /api/movies/{movieid}/reviews | GET | Get all reviews for movie 
-- /api/movies/{movieid}/reviews | POST | Create a new review for Movie 
-
-If you have your API design on an online platform or graphic, please link to it (e.g. [Swaggerhub](https://app.swaggerhub.com/)).
+- /api/movies/tmdb/discover?page=${page} | GET | Gets discover movies 
+- /api/movies/tmdb/upcoming?page=${page} | GET | Gets upcoming movies 
+- /api/movies/tmdb/popular?page=${page} | GET | Gets popular movies 
+- /api/movies/tmdb/topRated?page=${page} | GET | Gets top rated movies 
+- /api/movies/tmdb/trending | GET | Gets trending movies 
+- /api/movies/${id} | GET | Gets a single movie 
+- /api/movies/tmdb/genres | GET | Gets all movie genres
+- /api/movies/images/${id} | GET | Gets images for a given movie
+- /api/movies/reviews/${id} | GET | Gets reviews for a given movie
+- /api/actors/${id} | GET | Gets a single actor
+- /api/actors/images/${id} | GET | Gets images of a given actor
+- /api/movies/actors/${id} | GET | Gets movies featuring a given actor
+- /api/favourites/movies/${username} | GET | Gets a user's favourited movies
+- /api/favourites/movies/${username} | PUT | Updates a user's favourited movies 
+- /api/users | POST | Log in to an account
+- /api/users?action=register | POST | Sign up for a new account
 
 ## Security and Authentication
 
-Give details of authentication/security implemented on the API (e.g. passport/sessions). Indicate which routes are protected.
+- Users log in and sign up through POST endpoints
+- All routes except for log in and sign up pages are protected
+- JWT tokens are issued once users log in, allowing them access to the protected routes
+- Password are hashed and salted before they are stored on MongoDB for security purposes
+- Usernames must contain a letter, number and symbol and must be at least 8 characters long
 
 ## Integrating with React App
 
-Describe how you integrated your React app with the API. List the views that use your Web API instead of the TMDB API. Describe any other updates to the React app from Assignment One.
-
-## Independent learning (if relevant)
-
-Briefly explain any non-standard features developed for the app.   
+- Views integrated with the Web API are listed in the above 'API Design' section
+- Some features (eg. pagination) were rewritten to accommodate the new infrastructure
+- Most API calls are implemented in the Web API
+- Frontend makes calls to backend Web API, which makes calls to TMDB API and MongoDB as needed
+- Collections are stored in MongoDB for users and their favourite movies
